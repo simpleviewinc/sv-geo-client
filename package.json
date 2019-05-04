@@ -1,0 +1,22 @@
+{
+	"name": "@simpleview/sv-geo-client",
+	"version": "1.0.0",
+	"description": "Client for communicating with sv-geo",
+	"author": "Owen Allen <owenallenaz@gmail.com>",
+	"dependencies": {
+		"@simpleview/sv-graphql-client": "*",
+		"graphql": "14.2.1",
+		"graphql-tools": "4.0.4"
+	},
+	"main": "src/index.js",
+	"browser": "src/browser.js",
+	"scripts": {
+		"docker": "./dev/build && ./dev/run || true",
+		"publish": "./dev/publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/simpleviewinc/sv-geo-client"
+	},
+	"license": "MIT"
+}

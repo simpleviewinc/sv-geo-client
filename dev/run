@@ -1,0 +1,8 @@
+#!/bin/bash
+docker run --rm -it \
+	-v $PWD/src:/app/src \
+	-v $PWD/testing:/app/testing \
+	-v $PWD/package.json:/app/package.json \
+	-v $PWD/../sv-geo-client/src/:/app/node_modules/@simpleview/sv-geo-client \
+	--add-host=graphql.kube.simpleview.io:192.168.50.100 \
+	sv-auth-client:local /bin/sh
