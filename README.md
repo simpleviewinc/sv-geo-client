@@ -34,5 +34,5 @@ const graphServer = new GraphServer({ graphUrl : GRAPH_URL, prefixes : [GeoPrefi
 	- Not all cities will have a region.
 
 - **metros**
-	- Returns the Nielsen Demographic Marketing Areas. These are sub-regions of the US that span across state lines. Allowing marketers to target things the Washington DC metro area which spans across cities and states.
+	- Returns the Nielsen Designated Marketing Areas. These are sub-regions of the US that span across state lines. Allowing marketers to target things the Washington DC metro area which spans across cities and states.
 	- The region_codes represent the states that DMA is valid for.
