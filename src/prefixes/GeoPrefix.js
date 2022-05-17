@@ -24,7 +24,8 @@ class GeoPrefix {
 				ip
 			},
 			url : this._graphUrl,
-			token : context.token
+			token : context.token,
+			timeout : context.timeout
 		});
 		
 		const returnData = result.geo.ip_to_geo;
