@@ -7,7 +7,12 @@ class GeoPrefix {
 		this._graphUrl = graphUrl;
 		this._graphServer = graphServer;
 	}
-	async ip_to_geo({ ip, fields, context }) {
+	async ip_to_geo({
+		ip,
+		fields,
+		timeout = 5000,
+		context
+	}) {
 		context = context || this._graphServer.context;
 		
 		const result = await query({
@@ -24,7 +29,8 @@ class GeoPrefix {
 				ip
 			},
 			url : this._graphUrl,
-			token : context.token
+			token : context.token,
+			timeout
 		});
 		
 		const returnData = result.geo.ip_to_geo;
@@ -33,7 +39,11 @@ class GeoPrefix {
 		
 		return returnData;
 	}
-	async _generic(method, { fields, context }) {
+	async _generic(method, {
+		fields,
+		timeout = 5000,
+		context
+	}) {
 		context = context || this._graphServer.context;
 		
 		const result = await query({
@@ -47,7 +57,8 @@ class GeoPrefix {
 				}
 			`,
 			url : this._graphUrl,
-			token : context.token
+			token : context.token,
+			timeout
 		});
 		
 		const returnData = result.geo[method];
