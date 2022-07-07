@@ -3,10 +3,11 @@ const { query, nullToUndefined } = require("@simpleview/sv-graphql-client");
 class GeoPrefix {
 	constructor({ graphUrl, graphServer }) {
 		this.name = "geo";
-		
+
 		this._graphUrl = graphUrl;
 		this._graphServer = graphServer;
 	}
+
 	async ip_to_geo({
 		ip,
 		fields,
@@ -45,9 +46,9 @@ class GeoPrefix {
 		context
 	}) {
 		context = context || this._graphServer.context;
-		
+
 		const result = await query({
-			query : `
+			query: `
 				query {
 					geo {
 						${method} {
@@ -56,15 +57,15 @@ class GeoPrefix {
 					}
 				}
 			`,
-			url : this._graphUrl,
-			token : context.token,
+			url: this._graphUrl,
+			token: context.token,
 			timeout
 		});
-		
+
 		const returnData = result.geo[method];
-		
+
 		nullToUndefined(returnData);
-		
+
 		return returnData;
 	}
 	async countries(args) {
