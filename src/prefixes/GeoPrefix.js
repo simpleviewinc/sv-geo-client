@@ -1,4 +1,5 @@
 const { query, nullToUndefined } = require("@simpleview/sv-graphql-client");
+const pMemoize = require("p-memoize");
 
 class GeoPrefix {
 	constructor({ graphUrl, graphServer }) {
@@ -15,30 +16,38 @@ class GeoPrefix {
 		context
 	}) {
 		context = context || this._graphServer.context;
-		
-		const result = await query({
-			query : `
-				query($ip: String!) {
-					geo {
-						ip_to_geo(ip: $ip) {
-							${fields}
+
+		const getGeoForIp = async (graphUrl, ip, fields, token, timeout) => {
+			const result = await query({
+				query: `
+					query($ip: String!) {
+						geo {
+							ip_to_geo(ip: $ip) {
+								${fields}
+							}
 						}
 					}
-				}
-			`,
-			variables : {
-				ip
-			},
-			url : this._graphUrl,
-			token : context.token,
-			timeout
+				`,
+				variables: {
+					ip
+				},
+				url: graphUrl,
+				token: token,
+				timeout
+			});
+
+			const returnData = result.geo.ip_to_geo;
+
+			nullToUndefined(returnData);
+
+			return returnData;
+		}
+
+		const geo_data = pMemoize(getGeoForIp, {
+			cacheKey: _ => JSON.stringify({ ip, fields })
 		});
-		
-		const returnData = result.geo.ip_to_geo;
-		
-		nullToUndefined(returnData);
-		
-		return returnData;
+
+		return await geo_data(this._graphUrl, ip, fields, context.token, timeout);
 	}
 	async _generic(method, {
 		fields,

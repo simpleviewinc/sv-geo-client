@@ -6,7 +6,8 @@
 	"dependencies": {
 		"@simpleview/sv-graphql-client": "*",
 		"graphql": "14.2.1",
-		"graphql-tools": "4.0.4"
+		"graphql-tools": "4.0.4",
+		"p-memoize": "4.0.4"
 	},
 	"main": "src/index.js",
 	"browser": "src/browser.js",
