@@ -7,7 +7,8 @@ class GeoPrefix {
 
 		this._graphUrl = graphUrl;
 		this._graphServer = graphServer;
-	}
+		this._cache = new Map();
+	}		
 
 	async ip_to_geo({
 		ip,
@@ -43,8 +44,9 @@ class GeoPrefix {
 			return returnData;
 		}
 
-		const geo_data = pMemoize(getGeoForIp, {
-			cacheKey: _ => JSON.stringify({ ip, fields })
+		const geo_data = pMemoize(getGeoForIp, {			
+			cacheKey: _ => JSON.stringify({ ip, fields }),
+			cache: this._cache
 		});
 
 		return await geo_data(this._graphUrl, ip, fields, context.token, timeout);
