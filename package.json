@@ -1,12 +1,13 @@
 {
 	"name": "@simpleview/sv-geo-client",
-	"version": "1.0.2",
+	"version": "1.0.5",
 	"description": "Client for communicating with sv-geo",
 	"author": "Owen Allen <owenallenaz@gmail.com>",
 	"dependencies": {
 		"@simpleview/sv-graphql-client": "*",
 		"graphql": "14.2.1",
-		"graphql-tools": "4.0.4"
+		"graphql-tools": "4.0.4",
+		"lru-cache": "7.14.1"
 	},
 	"main": "src/index.js",
 	"browser": "src/browser.js",
