@@ -1,4 +1,5 @@
 const { query, nullToUndefined } = require("@simpleview/sv-graphql-client");
+const lru = require("lru-cache");
 
 class GeoPrefix {
 	constructor({ graphUrl, graphServer }) {
@@ -6,6 +7,10 @@ class GeoPrefix {
 		
 		this._graphUrl = graphUrl;
 		this._graphServer = graphServer;
+		this._cache = new lru({
+			max: 5000,
+			ttl: 1000 * 60 * 5
+		});
 	}
 	async ip_to_geo({
 		ip,
@@ -13,6 +18,12 @@ class GeoPrefix {
 		timeout = 5000,
 		context
 	}) {
+		const cacheKey = JSON.stringify({ ip, fields });
+
+		if (this._cache.has(cacheKey)) {
+			return this._cache.get(cacheKey);
+		}
+
 		context = context || this._graphServer.context;
 		
 		const result = await query({
@@ -37,6 +48,8 @@ class GeoPrefix {
 		
 		nullToUndefined(returnData);
 		
+		this._cache.set(cacheKey, returnData);
+
 		return returnData;
 	}
 	async _generic(method, {
