@@ -1,6 +1,6 @@
 {
 	"name": "@simpleview/sv-geo-client",
-	"version": "1.0.5",
+	"version": "2.3.1",
 	"description": "Client for communicating with sv-geo",
 	"author": "Owen Allen <owenallenaz@gmail.com>",
 	"dependencies": {
